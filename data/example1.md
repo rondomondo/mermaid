@@ -23,7 +23,6 @@ flowchart TB
     EPA --> DR[Deployment Restrictions]:::outputNode
     end
 
-    %%Node Styling
     classDef measurementNode fill:#4CAF50,stroke:#2E7D32,color:white
     classDef objectiveNode fill:#2196F3,stroke:#1976D2,color:white
     classDef budgetNode fill:#FF9800,stroke:#F57C00,color:white
@@ -34,7 +33,6 @@ flowchart TB
     classDef actionNode fill:#795548,stroke:#5D4037,color:white
     classDef outputNode fill:#607D8B,stroke:#455A64,color:white
 
-    %%Subgraph Styling
     classDef subgraphStyle fill:#f5f5f5,stroke:#cccccc,stroke-width:2px
     class ReliabilityMetrics,ErrorBudgetManagement subgraphStyle
 ```

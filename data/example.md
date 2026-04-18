@@ -1,6 +1,7 @@
 # SRE Common Diagrams
 
 ```mermaid
+
 %%{init: { 'theme': 'base', 'themeVariables': {
     'actorBkg': '#4CAF50',
     'actorTextColor': '#fff',
@@ -74,6 +75,7 @@ sequenceDiagram
 
 ## Relationship between frameworks
 ```mermaid
+
 flowchart TB
     subgraph Primary Methods
         direction LR

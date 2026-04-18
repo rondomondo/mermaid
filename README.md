@@ -115,10 +115,10 @@ mermaid data/example.md -f png -t dark -s 3
 mermaid data/example.md -f svg -b transparent -w 1920
 ```
 
-### PNG with a coloured background
+### PNG with a coloured background - slate
 
 ```bash
-mermaid data/example.md --format png --width 640 --height 480 --bg red
+mermaid data/example.md --format png --width 640 --height 480 --bg '#99aacc'
 ```
 
 ### PDF export
