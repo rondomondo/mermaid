@@ -21,8 +21,6 @@
 #   mermaid data/example.md --format png  --width 960 --height 640 --bg #99aacc
 #   mermaid data/example.md -f svg -b transparent -w 1920
 
-#set +x
-
 mermaid() {
   local input=""
   local format="svg"
