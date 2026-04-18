@@ -1,8 +1,10 @@
 # mermaid
 
-A shell function (compatible with **bash** and **zsh**) that renders [Mermaid](https://mermaid.js.org/) diagrams found inside Markdown files. It uses the official [`minlag/mermaid-cli`](https://hub.docker.com/r/minlag/mermaid-cli) Docker image — no Node.js or local npm install required.
+**Render [Mermaid](https://mermaid.js.org/) diagrams from Markdown to SVG, PNG, or PDF without installing Node.js or npm.** A lightweight shell function (compatible with **bash** and **zsh**) scans every ` ```mermaid ` fenced block in a Markdown file and renders each one to a numbered image using the official [`minlag/mermaid-cli`](https://hub.docker.com/r/minlag/mermaid-cli) Docker image, producing a companion Markdown file with diagram code replaced by standard image references.
 
-Each ```` ```mermaid ```` fenced block in your input file is extracted and rendered to an image (SVG, PNG, or PDF). The output is a new Markdown file with the diagram code blocks replaced by `![diagram](./image-N.ext)` image references, plus the rendered image files alongside it.
+Suitable for local development, CI pipelines, documentation workflows, and [Claude Code](https://claude.ai/code) environments via the included [/mermaid](.claude/skills/mermaid/) slash command skill.
+
+After each ```` ```mermaid ```` fenced block in your input file is extracted and rendered to an image (SVG, PNG, or PDF), the output is a new Markdown file with the diagram code blocks replaced by `![diagram](./image-N.ext)` image references, plus the rendered image files alongside it.
 
 ---
 
@@ -217,7 +219,7 @@ The [example/example.png.md](example/example.png.md) file was produced by runnin
 mermaid data/example.md --format png --width 960 --height 640
 ```
 
-# SRE Common Diagrams
+### Example Rendered Diagrams - [SRE Common Diagrams](example/example.png.md)
 
 ![diagram](example/example.png-1.png)
 
