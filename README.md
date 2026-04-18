@@ -164,6 +164,71 @@ The original `.md` file is **not modified**.
 
 ---
 
+## Claude Code skill
+
+If you use [Claude Code](https://claude.ai/code), this repository ships a `/mermaid` slash command skill that lets Claude render your diagrams for you.
+
+### What it does
+
+Invoking `/mermaid data/example.md -f png` inside Claude Code will parse your arguments, verify the input file, check that the `mermaid` shell function is available, run the render, and report back the generated files — all without you touching the terminal.
+
+### Installing safely
+
+The skill lives in [.claude/skills/mermaid/](.claude/skills/mermaid/) inside this repository. Claude Code loads skills from a `.claude/skills/` directory in your **project root**, so the safest approach is to copy only the skill directory into your own project rather than pointing Claude at an arbitrary external directory.
+
+```bash
+# Inside your own project
+mkdir -p .claude/skills/mermaid
+
+# Copy the skill from a local clone of this repo
+cp /path/to/mermaid/.claude/skills/mermaid/SKILL.md .claude/skills/mermaid/SKILL.md
+```
+
+Or, if you want to pull it directly without cloning the whole repo:
+
+```bash
+mkdir -p .claude/skills/mermaid
+curl -fsSL \
+  https://raw.githubusercontent.com/rondomondo/mermaid/main/.claude/skills/mermaid/SKILL.md \
+  -o .claude/skills/mermaid/SKILL.md
+```
+
+**Before copying**, open `SKILL.md` and review the `allowed-tools` frontmatter field. It declares exactly which tools the skill is permitted to use — confirm these match what you expect before letting Claude run it.
+
+### Using the skill
+
+Once installed, start or restart Claude Code in your project, then:
+
+```
+/mermaid data/example.md
+/mermaid data/example.md -f png -s 2
+/mermaid --help
+```
+
+The skill requires the `mermaid` shell function to be available in your environment (see [Installation](#installation) above). If it is not sourced, the skill will tell you exactly what to run.
+
+---
+
+## Sample output
+
+The [example/example.png.md](example/example.png.md) file was produced by running:
+
+```bash
+mermaid data/example.md --format png --width 960 --height 640
+```
+
+# SRE Common Diagrams
+
+![diagram](example/example.png-1.png)
+
+<br>
+
+## Relationship between frameworks
+
+![diagram](example/example.png-2.png)
+
+---
+
 ## Tips
 
 - Use `--scale 2` or `--scale 3` for retina/HiDPI PNG exports.

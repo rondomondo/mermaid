@@ -10,14 +10,14 @@
 #   -b, --bg <color>      Background colour (e.g. white, transparent, '#f5f5f5')
 #   -w, --width <px>      Diagram width in pixels
 #   -H, --height <px>     Diagram height in pixels
-#   -s, --scale <n>       Pixel density / scale factor (default 1)
+#   -s, --scale <n>       Pixel density / scale factor (default 1 - or 3 for retina/HiDPI)
 #   -d, --dir <dir>       Host directory to mount (defaults to directory of input file)
 #   -h, --help            Show this help
 #
 # Examples:
 #   mermaid data/example.md
 #   mermaid data/example.md -f png
-#   mermaid data/example.md --format png  --scale 3
+#   mermaid data/example.md --format png  --scale 3   # retina/HiDPI
 #   mermaid data/example.md --format png  --width 960 --height 640 --bg #99aacc
 #   mermaid data/example.md -f svg -b transparent -w 1920
 
