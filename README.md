@@ -224,3 +224,4 @@ mermaid data/example.md --format png --width 960 --height 640
 - Combine `--bg transparent` with SVG output for diagrams you embed in dark-mode docs.
 - The `--dir` flag lets you mount a different directory if your assets span multiple folders.
 - Run `mermaid -h` at any time to print the built-in help.
+
