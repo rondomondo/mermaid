@@ -261,21 +261,21 @@ Outside the sandbox, the skill uses the `mermaid` shell function. Make sure it i
 
 ## Sample output
 
-The [data/example.png.md](../assets/data/example.md) file was produced by running:
+The [data/example.png.md](examples/example.md) file was produced by running:
 
 ```bash
-mermaid data/example.md --format png --width 960 --height 640
+mermaid examples/example.md --format png --width 960 --height 640
 ```
 
-### Example Rendered Diagrams - [SRE Common Diagrams](../assets/data/example.md)
+### Example Rendered Diagrams - [SRE Common Diagrams](examples/example.md)
 
-![diagram](../assets/data/example.svg-1.svg)
+![diagram](examples/example.svg-1.svg)
 
 <br>
 
 ## Relationship between frameworks
 
-![diagram](../assets/data/example.svg-2.svg)
+![diagram](examples/example.svg-2.svg)
 
 ---
 
