@@ -10,7 +10,7 @@ After each ```` ```mermaid ```` fenced block in your input file is extracted and
 
 ## Requirements
 
-- **Docker** installed and running locally
+- **Docker** installed and running locally (not required in Claude Code sandbox — see [Claude Code skill](#claude-code-skill))
 - **bash** (3.2+) or **zsh**
 
 ---
@@ -159,23 +159,78 @@ The original `.md` file is **not modified**.
 
 ## Claude Code skill
 
-If you use [Claude Code](https://claude.ai/code), this repository ships a `/mermaid` slash command skill that lets Claude render your diagrams for you.
+If you use [Claude Code](https://claude.ai/code), this repository ships a `/mermaid` slash command skill that lets Claude render your diagrams for you — no terminal required.
 
-### What it does
+### Render environments
 
-Invoking `/mermaid data/example.md -f png` inside Claude Code will parse your arguments, verify the input file, check that the `mermaid` shell function is available, run the render, and report back the generated files — all without you touching the terminal.
+The skill automatically detects which render path to use:
 
-### Installing safely
+| Environment | How it renders |
+|---|---|
+| **Claude Code sandbox** (`IS_SANDBOX=yes`) | Uses `mmdc` directly with a bundled Chromium — no Docker needed |
+| **Local / non-sandbox** | Uses the `mermaid` shell function backed by Docker (`minlag/mermaid-cli`) |
 
-The skill lives in [.claude/skills/mermaid/](.claude/skills/mermaid/) inside this repository. Claude Code loads skills from a `.claude/skills/` directory in your **project root**, so the safest approach is to copy only the skill directory into your own project rather than pointing Claude at an arbitrary external directory.
+You don't need to do anything differently — the skill picks the right path automatically.
 
-If you have a local clone, the easiest path is:
+### What it accepts
+
+The skill handles three input types:
+
+| Input | Example |
+|---|---|
+| Single file | `data/example.md` |
+| Local directory | `./docs/` — renders every `.md` with a mermaid block |
+| URL (file) | `https://example.com/diagram.md` |
+| URL (GitHub directory) | `https://github.com/user/repo/tree/main/docs` |
+
+### Ways to invoke the skill
+
+**Slash command** — type directly in the Claude Code prompt:
+
+```
+/mermaid data/example.md
+/mermaid data/example.md -f png -s 2
+/mermaid ./docs/ -f svg -t dark
+/mermaid https://github.com/user/repo/tree/main/docs
+```
+
+**Drag and drop / attach** — drag a `.md` file (or a folder) onto the Claude Code chat input, then ask:
+
+```
+Render the diagrams in this file as PNG
+```
+
+```
+Export all mermaid diagrams to SVG with a transparent background
+```
+
+**Natural language** — just describe what you want:
+
+```
+Can you render the mermaid diagrams in data/example.md?
+```
+
+```
+Export the diagrams in ./docs/ to PNG at 2× scale
+```
+
+```
+Generate SVG images from the mermaid blocks at https://github.com/user/repo/tree/main/docs
+```
+
+Claude will invoke the skill automatically when it detects a render request.
+
+### Installing the skill
+
+The skill lives in [.claude/skills/mermaid/](.claude/skills/mermaid/) inside this repository. Claude Code loads skills from a `.claude/skills/` directory in your **project root**.
+
+**Option 1 — make target (recommended if you have a local clone):**
 
 ```bash
 make skill-install   # copies .claude/skills/mermaid/ into ~/.claude/skills/mermaid/
 ```
 
-Alternatively, copy or download just the skill file:
+**Option 2 — download just the skill file:**
 
 ```bash
 mkdir -p .claude/skills/mermaid
@@ -184,45 +239,43 @@ curl -fsSL \
   -o .claude/skills/mermaid/SKILL.md
 ```
 
-Or from a local clone:
+**Option 3 — copy from a local clone:**
 
 ```bash
 cp /path/to/mermaid/.claude/skills/mermaid/SKILL.md .claude/skills/mermaid/SKILL.md
 ```
 
-**Before copying**, open `SKILL.md` and review the `allowed-tools` frontmatter field. It declares exactly which tools the skill is permitted to use — confirm these match what you expect before letting Claude run it.
+**Option 4 — grab the zip** (includes SKILL.md and helper scripts):
 
-### Using the skill
+Download [.claude/skills/mermaid.zip](.claude/skills/mermaid.zip) and unzip into your project's `.claude/skills/` directory.
 
-Once installed, start or restart Claude Code in your project, then:
+After installing, restart Claude Code so the skill is loaded.
 
-```
-/mermaid data/example.md
-/mermaid data/example.md -f png -s 2
-/mermaid --help
-```
+> **Before copying**, open `SKILL.md` and review the `allowed-tools` frontmatter — it declares exactly which tools the skill may use.
 
-The skill requires the `mermaid` shell function to be available in your environment (see [Installation](#installation) above). If it is not sourced, the skill will tell you exactly what to run.
+### Non-sandbox: Docker required
+
+Outside the sandbox, the skill uses the `mermaid` shell function. Make sure it is sourced (see [Installation](#installation)) and Docker is running. If either is missing the skill will tell you exactly what to fix.
 
 ---
 
 ## Sample output
 
-The [data/example.png.md](data/example.png.md) file was produced by running:
+The [data/example.png.md](../assets/data/example.md) file was produced by running:
 
 ```bash
 mermaid data/example.md --format png --width 960 --height 640
 ```
 
-### Example Rendered Diagrams - [SRE Common Diagrams](data/example.png.md)
+### Example Rendered Diagrams - [SRE Common Diagrams](../assets/data/example.md)
 
-![diagram](data/example.png-1.png)
+![diagram](../assets/data/example.svg-1.svg)
 
 <br>
 
 ## Relationship between frameworks
 
-![diagram](data/example.png-2.png)
+![diagram](../assets/data/example.svg-2.svg)
 
 ---
 
