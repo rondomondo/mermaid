@@ -2,15 +2,16 @@ REPO    := https://github.com/rondomondo/mermaid
 SCRIPT  := mermaid.sh
 INSTALL_DIR ?= /usr/local/bin
 
-BOLD  := \033[1m
-CYAN  := \033[36m
-GREEN := \033[32m
-RED   := \033[31m
-RESET := \033[0m
+BOLD   := \033[1m
+CYAN   := \033[36m
+GREEN  := \033[32m
+YELLOW := \033[33m
+RED    := \033[31m
+RESET  := \033[0m
 
 SHELL := /bin/bash
 .DEFAULT_GOAL := help
-.PHONY: help install uninstall check test pull-image doctor
+.PHONY: help install uninstall check test pull-image clean doctor skill-install
 
 help: ## Show available targets
 	@printf "$(BOLD)mermaid — available targets$(RESET)\n\n"
@@ -19,11 +20,11 @@ help: ## Show available targets
 	@echo ""
 
 install: ## Copy mermaid.sh to INSTALL_DIR and add source line to shell profile
-	@echo "Installing $(SCRIPT) → $(INSTALL_DIR)/$(SCRIPT)"
+	@printf "$(CYAN)Installing$(RESET) $(SCRIPT) → $(INSTALL_DIR)/$(SCRIPT)\n"
 	@cp $(SCRIPT) "$(INSTALL_DIR)/$(SCRIPT)"
 	@chmod 644 "$(INSTALL_DIR)/$(SCRIPT)"
 	@PROFILE=""; \
-	if [[ -n "$$ZSH_VERSION" ]] || [[ "$$(basename "$$SHELL")" == "zsh" ]]; then \
+	if [[ "$$(basename "$$SHELL")" == "zsh" ]]; then \
 		PROFILE=~/.zshrc; \
 	else \
 		PROFILE=~/.bashrc; \
@@ -62,16 +63,35 @@ check: ## Check that Docker is running and the mermaid function is available in 
 		printf "$(RED)not found — run 'make install' first$(RESET)\n"; exit 1; \
 	fi
 
-pull-image: ## Pre-pull the minlag/mermaid-cli Docker image
-	docker pull minlag/mermaid-cli
+MERMAID_IMAGE ?= minlag/mermaid-cli:latest
 
-test: check ## Render data/example.md as SVG and PNG to verify the full pipeline
-	@echo "--- SVG render ---"
-	@bash -c 'source $(INSTALL_DIR)/$(SCRIPT) && mermaid data/example.md -f svg'
-	@echo "--- PNG render ---"
-	@bash -c 'source $(INSTALL_DIR)/$(SCRIPT) && mermaid data/example.md -f png --width 960 --height 640'
+pull-image: ## Pre-pull the minlag/mermaid-cli Docker image (override: MERMAID_IMAGE=minlag/mermaid-cli:x.y.z)
+	@printf "$(CYAN)Pulling$(RESET) $(MERMAID_IMAGE)...\n"
+	@docker pull $(MERMAID_IMAGE)
+	@printf "$(GREEN)Image ready$(RESET)\n"
+
+TEST_INPUT ?= data/example.md
+
+test: check ## Render TEST_INPUT as SVG and PNG to verify the full pipeline (override: TEST_INPUT=data/foo.md)
+	@printf "$(BOLD)$(CYAN)--- SVG render ---$(RESET)\n"
+	@bash -c 'source $(INSTALL_DIR)/$(SCRIPT) && mermaid $(TEST_INPUT) -f svg'
+	@printf "$(BOLD)$(CYAN)--- PNG render ---$(RESET)\n"
+	@bash -c 'source $(INSTALL_DIR)/$(SCRIPT) && mermaid $(TEST_INPUT) -f png --width 960 --height 640'
 	@printf "$(GREEN)Test renders complete$(RESET)\n"
-	@ls -lh data/example.svg.md data/example.png.md 2>/dev/null || true
+	@stem=$$(basename $(TEST_INPUT) .md); \
+	ls -lh "data/$${stem}.svg.md" "data/$${stem}.png.md" 2>/dev/null || true
+
+clean: ## Remove rendered output files from data/ and example/
+	@printf "$(CYAN)Removing$(RESET) rendered output files...\n"
+	@find data/ example/ -type f \( -name "*.svg.md" -o -name "*.png.md" -o -name "*.pdf.md" \
+	  -o -name "*-[0-9].svg" -o -name "*-[0-9].png" \) -delete 2>/dev/null || true
+	@printf "$(GREEN)Clean$(RESET)\n"
+
+skill-install: ## Install the /mermaid skill into ~/.claude/skills/mermaid/
+	@printf "$(GREEN)Installing$(RESET) .claude/skills/mermaid → ~/.claude/skills/mermaid\n"
+	@mkdir -p ~/.claude/skills/mermaid
+	@/bin/cp -R .claude/skills/mermaid/. ~/.claude/skills/mermaid/
+	@printf "$(GREEN)Installed$(RESET) .claude/skills/mermaid → ~/.claude/skills/mermaid\n"
 
 doctor: ## Show environment info useful for bug reports
 	@printf "$(BOLD)mermaid doctor$(RESET)\n\n"
