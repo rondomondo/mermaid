@@ -43,7 +43,7 @@ make check
 ## Quick start
 
 ```bash
-mermaid data/example.md        # renders to SVG (default)
+mermaid examples/example.md        # renders to SVG (default)
 make test                      # smoke-test: renders example.md as SVG and PNG
 ```
 
@@ -72,13 +72,13 @@ Options:
 ### SVG output (default)
 
 ```bash
-mermaid data/example.md
+mermaid examples/example.md
 ```
 
 ### PNG at a custom resolution
 
 ```bash
-mermaid data/example.md --format png --width 960 --height 640
+mermaid examples/example.md --format png --width 960 --height 640
 ```
 
 Example output:
@@ -92,46 +92,46 @@ Found 6 mermaid charts in Markdown input
  ✅ ./example.png-4.png
  ✅ ./example.png-5.png
  ✅ ./example.png-6.png
- ✅ /data/example.png.md
-mermaid: written → /Users/davek/Code/mermaid/data/example.png.md
+ ✅ /examples/example.png.md
+mermaid: written → /Users/davek/Code/mermaid/examples/example.png.md
 ```
 
 ### PNG with dark theme and high pixel density
 
 ```bash
-mermaid data/example.md -f png -t dark -s 3
+mermaid examples/example.md -f png -t dark -s 3
 ```
 
 ### SVG with a transparent background, wide canvas
 
 ```bash
-mermaid data/example.md -f svg -b transparent -w 1920
+mermaid examples/example.md -f svg -b transparent -w 1920
 ```
 
 ### PNG with a coloured background - slate
 
 ```bash
-mermaid data/example.md --format png --width 640 --height 480 --bg '#99aacc'
+mermaid examples/example.md --format png --width 640 --height 480 --bg '#99aacc'
 ```
 
 ### PDF export
 
 ```bash
-mermaid data/example.md --format pdf
+mermaid examples/example.md --format pdf
 ```
 
 ---
 
 ## Output files
 
-For an input file `data/example.md` rendered as PNG the function writes:
+For an input file `examples/example.md` rendered as PNG the function writes:
 
 | File | Description |
 |---|---|
-| `data/example.png-1.png` | First rendered diagram |
-| `data/example.png-2.png` | Second rendered diagram |
+| `examples/example.png-1.png` | First rendered diagram |
+| `examples/example.png-2.png` | Second rendered diagram |
 | … | … |
-| `data/example.png.md` | Updated Markdown with `![diagram](./example.png-N.png)` image links |
+| `examples/example.png.md` | Updated Markdown with `![diagram](./example.png-N.png)` image links |
 
 The original `.md` file is **not modified**.
 
@@ -178,7 +178,7 @@ The skill handles three input types:
 
 | Input | Example |
 |---|---|
-| Single file | `data/example.md` |
+| Single file | `examples/example.md` |
 | Local directory | `./docs/` — renders every `.md` with a mermaid block |
 | URL (file) | `https://example.com/diagram.md` |
 | URL (GitHub directory) | `https://github.com/user/repo/tree/main/docs` |
@@ -188,8 +188,8 @@ The skill handles three input types:
 **Slash command** — type directly in the Claude Code prompt:
 
 ```
-/mermaid data/example.md
-/mermaid data/example.md -f png -s 2
+/mermaid examples/example.md
+/mermaid examples/example.md -f png -s 2
 /mermaid ./docs/ -f svg -t dark
 /mermaid https://github.com/user/repo/tree/main/docs
 ```
@@ -207,7 +207,7 @@ Export all mermaid diagrams to SVG with a transparent background
 **Natural language** — just describe what you want:
 
 ```
-Can you render the mermaid diagrams in data/example.md?
+Can you render the mermaid diagrams in examples/example.md?
 ```
 
 ```
@@ -261,21 +261,21 @@ Outside the sandbox, the skill uses the `mermaid` shell function. Make sure it i
 
 ## Sample output
 
-The [data/example.png.md](data/example.png.md) file was produced by running:
+The [examples/example.png.md](examples/example.png.md) file was produced by running:
 
 ```bash
-mermaid data/example.md --format png --width 960 --height 640
+mermaid examples/example.md --format png --width 960 --height 640
 ```
 
-### Example Rendered Diagrams - [SRE Common Diagrams](data/example.png.md)
+### Example Rendered Diagrams - [SRE Common Diagrams](examples/example.png.md)
 
-![diagram](data/example.png-1.png)
+![diagram](examples/example.png-1.png)
 
 <br>
 
 ## Relationship between frameworks
 
-![diagram](data/example.png-2.png)
+![diagram](examples/example.png-2.png)
 
 ---
 
