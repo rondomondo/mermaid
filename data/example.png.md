@@ -1,4 +1,4 @@
-# Example Rendered Diagrams - SRE Common Diagrams
+# SRE Common Diagrams
 
 ![diagram](./example.png-1.png)
 

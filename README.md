@@ -169,6 +169,14 @@ Invoking `/mermaid data/example.md -f png` inside Claude Code will parse your ar
 
 The skill lives in [.claude/skills/mermaid/](.claude/skills/mermaid/) inside this repository. Claude Code loads skills from a `.claude/skills/` directory in your **project root**, so the safest approach is to copy only the skill directory into your own project rather than pointing Claude at an arbitrary external directory.
 
+If you have a local clone, the easiest path is:
+
+```bash
+make skill-install   # copies .claude/skills/mermaid/ into ~/.claude/skills/mermaid/
+```
+
+Alternatively, copy or download just the skill file:
+
 ```bash
 mkdir -p .claude/skills/mermaid
 curl -fsSL \
@@ -176,7 +184,7 @@ curl -fsSL \
   -o .claude/skills/mermaid/SKILL.md
 ```
 
-Or if you have a local clone:
+Or from a local clone:
 
 ```bash
 cp /path/to/mermaid/.claude/skills/mermaid/SKILL.md .claude/skills/mermaid/SKILL.md
@@ -200,21 +208,21 @@ The skill requires the `mermaid` shell function to be available in your environm
 
 ## Sample output
 
-The [example/example.png.md](example/example.png.md) file was produced by running:
+The [data/example.png.md](data/example.png.md) file was produced by running:
 
 ```bash
 mermaid data/example.md --format png --width 960 --height 640
 ```
 
-### Example Rendered Diagrams - [SRE Common Diagrams](example/example.png.md)
+### Example Rendered Diagrams - [SRE Common Diagrams](data/example.png.md)
 
-![diagram](example/example.png-1.png)
+![diagram](data/example.png-1.png)
 
 <br>
 
 ## Relationship between frameworks
 
-![diagram](example/example.png-2.png)
+![diagram](data/example.png-2.png)
 
 ---
 

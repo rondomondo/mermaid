@@ -11,7 +11,7 @@ RESET  := \033[0m
 
 SHELL := /bin/bash
 .DEFAULT_GOAL := help
-.PHONY: help install uninstall check test pull-image clean doctor skill-install
+.PHONY: help install uninstall check test pull-image clean doctor skill-install skill-zip
 
 help: ## Show available targets
 	@printf "$(BOLD)mermaid — available targets$(RESET)\n\n"
@@ -83,7 +83,7 @@ test: check ## Render TEST_INPUT as SVG and PNG to verify the full pipeline (ove
 
 clean: ## Remove rendered output files from data/ and example/
 	@printf "$(CYAN)Removing$(RESET) rendered output files...\n"
-	@find data/ example/ -type f \( -name "*.svg.md" -o -name "*.png.md" -o -name "*.pdf.md" \
+	@find example/ -type f \( -name "*.svg.md" -o -name "*.png.md" -o -name "*.pdf.md" \
 	  -o -name "*-[0-9].svg" -o -name "*-[0-9].png" \) -delete 2>/dev/null || true
 	@printf "$(GREEN)Clean$(RESET)\n"
 
@@ -95,6 +95,11 @@ skill-install: ## Install the /mermaid skill into ~/.claude/skills/mermaid/
 	@mkdir -p ~/.claude/skills/mermaid
 	@/bin/cp -R .claude/skills/mermaid/* ~/.claude/skills/mermaid/
 	@printf "$(GREEN)Installed$(RESET) .claude/skills/mermaid → ~/.claude/skills/mermaid\n"
+
+skill-zip: ## Zip .claude/skills/mermaid/ into .claude/skills/mermaid.zip
+	@printf "$(CYAN)Zipping$(RESET) .claude/skills/mermaid → .claude/skills/mermaid.zip\n"
+	@cd .claude/skills && zip -r mermaid.zip mermaid/
+	@printf "$(GREEN)Written$(RESET) .claude/skills/mermaid.zip\n"
 
 doctor: ## Show environment info useful for bug reports
 	@printf "$(BOLD)mermaid doctor$(RESET)\n\n"
