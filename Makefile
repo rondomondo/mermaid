@@ -88,9 +88,12 @@ clean: ## Remove rendered output files from data/ and example/
 	@printf "$(GREEN)Clean$(RESET)\n"
 
 skill-install: ## Install the /mermaid skill into ~/.claude/skills/mermaid/
+	@chmod +x mermaid.sh
+	@/bin/cp mermaid.sh .claude/skills/mermaid/scripts/ 
+	@/bin/cp README.md .claude/skills/mermaid/docs/ 
 	@printf "$(GREEN)Installing$(RESET) .claude/skills/mermaid → ~/.claude/skills/mermaid\n"
 	@mkdir -p ~/.claude/skills/mermaid
-	@/bin/cp -R .claude/skills/mermaid/. ~/.claude/skills/mermaid/
+	@/bin/cp -R .claude/skills/mermaid/* ~/.claude/skills/mermaid/
 	@printf "$(GREEN)Installed$(RESET) .claude/skills/mermaid → ~/.claude/skills/mermaid\n"
 
 doctor: ## Show environment info useful for bug reports

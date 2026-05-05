@@ -1,10 +1,6 @@
 ---
 name: mermaid
 description: Render Mermaid diagrams from a Markdown file to SVG, PNG, or PDF using the local mermaid shell function (Docker-backed). Use when the user wants to render, generate, export, or convert mermaid diagrams or charts found in a .md file.
-when_to_use: Triggers on phrases like "render this diagram", "generate diagram images", "export mermaid to PNG/SVG/PDF", "run mermaid on", "convert diagrams in".
-argument-hint: '[file.md] [-f svg|png|pdf] [-t theme] [-b bg] [-w width] [-H height] [-s scale]'
-disable-model-invocation: false
-allowed-tools: Bash(mermaid *) Read Glob
 ---
 
 # Mermaid Render Skill
@@ -14,7 +10,7 @@ You are rendering Mermaid diagrams from a Markdown file using the `mermaid` shel
 ## How the tool works
 
 - The `mermaid` shell function wraps `minlag/mermaid-cli` via Docker.
-- It finds every ` ```mermaid ' fenced block in the input `.md` file.
+- It finds every ` ```mermaid ` fenced block in the input `.md` file.
 - It renders each block to a numbered image file (e.g. `example.png-1.png`).
 - It writes a companion `.md` file with `![diagram](./image-N.ext)` references replacing the code blocks.
 - The original file is **never modified**.
